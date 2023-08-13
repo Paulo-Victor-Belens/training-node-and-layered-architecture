@@ -1,17 +1,12 @@
 const express = require('express');
-const connection = require('../models/connection');
+const ProductsController = require('../controllers/products.controller');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-  const [row] = await connection.execute('SELECT * FROM products');
-  res.status(200).json(row); 
-});
+// Aqui vão os validadores, middlewares, etc...
 
-router.get('/:id', async (req, res) => {
-  const { id } = req.params;
-  const [row] = await connection.execute('SELECT * FROM products where id = ?', [id]);
-  res.status(200).json(row); 
-});
+router.get('/', ProductsController.show);
+
+router.get('/:id', ProductsController.showById);
 
 module.exports = router;
